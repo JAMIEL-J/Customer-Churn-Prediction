@@ -2,6 +2,10 @@
 
 <div align="center">
 
+### 🌐 [**👉 Live Demo**](https://customer-churn-prediction-with-business-analysis.streamlit.app/) ← Click to Try!
+
+---
+
 ![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)
 ![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-1.3+-orange.svg)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.28+-red.svg)
