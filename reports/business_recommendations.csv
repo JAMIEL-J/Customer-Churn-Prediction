@@ -1,0 +1,10 @@
+Metric,Value
+Recommended Model,Random Forest
+Optimal Threshold (Single),0.20
+Expected Net ROI (Single),"$106,373.83"
+High-Value Threshold,0.25
+Low-Value Threshold,0.30
+Expected Net ROI (Segmented),"$124,390.84"
+CLV (Average),"$1,554.28"
+Retention Cost,$50.00
+Retention Success Rate,25%
