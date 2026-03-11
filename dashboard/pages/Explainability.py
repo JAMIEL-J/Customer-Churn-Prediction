@@ -128,6 +128,8 @@ try:
         if shap_force_path.exists():
             st.image(str(shap_force_path), use_container_width=True)
             st.caption("SHAP Force Plot explaining features pushing higher/lower risk for a single customer.")
+        else:
+            st.info("SHAP force plot not available.")
     
     st.markdown("---")
     

@@ -206,8 +206,8 @@ To ensure the business impact analysis reflects realistic scenarios, the followi
 
 | Parameter | Value | Rationale / Benchmark |
 |-----------|-------|-----------------------|
-| **Customer Lifetime Value (CLV)** | ~$1,554 | Calculated dynamically (Avg monthly charge × 24 months). Telecom industry CLV strategy heavily focuses on retention since CLV should be at least 3x CAC. |
-| **Retention Intervention Cost** | $50 | Baseline estimate for promotional discounts, loyalty incentives, and call center overhead (agents' AHT and FCR factors). |
+| **Customer Lifetime Value (CLV)** | ~$1,554 | Calculated dynamically (Avg monthly charge × 24 months). Telecom industry CLV strategy heavily focuses on retention since CLV should be at least 3x CAC (Customer Acquisition Cost). |
+| **Retention Intervention Cost** | $50 | Baseline estimate for promotional discounts, loyalty incentives, and call center overhead (agents' AHT (Average Handle Time) and FCR (First Call Resolution) factors). |
 | **Intervention Success Rate** | 25% | Conservative estimate. While telecom baseline retention averages 75-78%, saving an *already at-risk* customer yields lower success rates (15-30%) depending on the offer. |
 
 ---
