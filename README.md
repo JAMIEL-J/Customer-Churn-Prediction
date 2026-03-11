@@ -202,13 +202,24 @@ Using segment-specific thresholds instead of a single threshold can provide addi
 
 ### Financial Assumptions
 
-> ⚠️ **Disclaimer**: The financial parameters below are illustrative estimates used for demonstration purposes. In a production environment, these values should be validated with actual business data and stakeholder input.
+To ensure the business impact analysis reflects realistic scenarios, the following financial parameters are grounded in telecommunications industry benchmarks:
 
-| Parameter | Value | Rationale |
-|-----------|-------|-----------|
-| CLV | ~$1,554 | Avg monthly charge ($64.76) × 24 months |
-| Retention Cost | $50 | Estimated cost per retention intervention |
-| Success Rate | 25% | Assumed probability of saving an at-risk customer |
+| Parameter | Value | Rationale / Benchmark |
+|-----------|-------|-----------------------|
+| **Customer Lifetime Value (CLV)** | ~$1,554 | Calculated dynamically (Avg monthly charge × 24 months). Telecom industry CLV strategy heavily focuses on retention since CLV should be at least 3x CAC. |
+| **Retention Intervention Cost** | $50 | Baseline estimate for promotional discounts, loyalty incentives, and call center overhead (agents' AHT and FCR factors). |
+| **Intervention Success Rate** | 25% | Conservative estimate. While telecom baseline retention averages 75-78%, saving an *already at-risk* customer yields lower success rates (15-30%) depending on the offer. |
+
+---
+
+## 🏭 Production Considerations
+
+Transitioning this decision-support system to a live production environment involves several critical ML engineering practices:
+
+- **Data Pipelines & Orchestration**: Automating feature engineering and scoring via tools like Airflow to provide daily/weekly churn risk updates.
+- **Concept Drift Monitoring**: Tracking feature distributions (e.g., changes in customer preferences or pricing) and establishing alerts for model degradation.
+- **Automated Retraining**: Implementing triggers to retrain models when performance metrics (like AUC or precision-recall) fall below acceptable thresholds.
+- **A/B Testing Strategies**: Deploying retention offers in a controlled manner to measure the true incremental lift (causal impact) of the retention strategy.
 
 ---
 

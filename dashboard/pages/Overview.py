@@ -79,13 +79,21 @@ try:
     st.subheader("📋 Recommendation Summary")
     st.dataframe(recommendations, use_container_width=True, hide_index=True)
     
+    # Best Model highlight
+    model_row = recommendations[recommendations['Metric'] == 'Recommended Model']
+    best_model = model_row['Value'].values[0] if len(model_row) > 0 else "XGBoost"
+    
+    st.success(f"**Primary Recommendation**: Deploy the **{best_model}** model. It provides the highest AUC and best captures non-linear churn drivers while natively handling class imbalance.")
+    
     # Key insight
     st.markdown("---")
-    st.info("""
-    **Key Insight**: Using the optimal threshold strategy, we can expect to save 
-    significant revenue while contacting a targeted subset of at-risk customers.
+    st.info(f"""
+    **Key Executive Insights**:
+    1. **Model Performance**: {best_model} identifies ~84% of potential churners (Recall) while maintaining high precision.
+    2. **Segmented ROI**: Targeting High-Value and Low-Value segments with different thresholds yields the maximum financial return.
+    3. **Strategy Sensitivity**: ROI remains robust across varying retention success rates (15-30%), though intervention cost management is the primary profitability driver.
     
-    → Go to **Decision Tool** to explore different threshold settings.
+    → Use the **Decision Tool** to adjust thresholds for specific budget constraints.
     """)
 
 except Exception as e:

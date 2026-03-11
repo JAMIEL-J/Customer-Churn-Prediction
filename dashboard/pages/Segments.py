@@ -33,16 +33,17 @@ def load_data():
 def load_models(_root):
     lr_model = joblib.load(_root / 'models' / 'logistic_regression.pkl')
     rf_model = joblib.load(_root / 'models' / 'random_forest.pkl')
+    xgb_model = joblib.load(_root / 'models' / 'xgboost.pkl')
     scaler = joblib.load(_root / 'models' / 'scaler.pkl')
     
     with open(_root / 'models' / 'feature_cols.txt', 'r') as f:
         feature_cols = f.read().strip().split('\n')
     
-    return lr_model, rf_model, scaler, feature_cols
+    return lr_model, rf_model, xgb_model, scaler, feature_cols
 
 try:
     features, recommendations, root = load_data()
-    lr_model, rf_model, scaler, feature_cols = load_models(root)
+    lr_model, rf_model, xgb_model, scaler, feature_cols = load_models(root)
     
     st.markdown("---")
     
@@ -92,8 +93,8 @@ try:
     # Top N customers to contact
     st.subheader("📋 Top Customers to Contact")
     
-    model_choice = st.radio("Model", ["Logistic Regression", "Random Forest"], horizontal=True)
-    threshold = st.slider("Threshold", 0.1, 0.9, 0.35, 0.05)
+    model_choice = st.radio("Model", ["Logistic Regression", "Random Forest", "XGBoost"], horizontal=True, index=2)
+    threshold = st.slider("Threshold", 0.1, 0.9, 0.20, 0.05)
     top_n = st.slider("Show Top N", 10, 100, 20, 10)
     
     # Prepare features
@@ -102,8 +103,10 @@ try:
     if model_choice == "Logistic Regression":
         X_scaled = scaler.transform(X)
         proba = lr_model.predict_proba(X_scaled)[:, 1]
-    else:
+    elif model_choice == "Random Forest":
         proba = rf_model.predict_proba(X)[:, 1]
+    else:
+        proba = xgb_model.predict_proba(X)[:, 1]
     
     features['churn_probability'] = proba
     features['predicted_churn'] = (proba >= threshold).astype(int)

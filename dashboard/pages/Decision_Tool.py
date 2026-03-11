@@ -26,10 +26,11 @@ def load_sweep_data():
     root = get_project_root()
     lr_sweep = pd.read_csv(root / 'reports' / 'lr_threshold_sweep.csv')
     rf_sweep = pd.read_csv(root / 'reports' / 'rf_threshold_sweep.csv')
-    return lr_sweep, rf_sweep
+    xgb_sweep = pd.read_csv(root / 'reports' / 'xgb_threshold_sweep.csv')
+    return lr_sweep, rf_sweep, xgb_sweep
 
 try:
-    lr_sweep, rf_sweep = load_sweep_data()
+    lr_sweep, rf_sweep, xgb_sweep = load_sweep_data()
     
     st.markdown("---")
     
@@ -42,12 +43,17 @@ try:
         # Model selector
         model = st.selectbox(
             "Select Model",
-            options=["Logistic Regression", "Random Forest"],
-            index=0
+            options=["Logistic Regression", "Random Forest", "XGBoost"],
+            index=2
         )
         
         # Get appropriate sweep data
-        sweep_df = lr_sweep if model == "Logistic Regression" else rf_sweep
+        if model == "Logistic Regression":
+            sweep_df = lr_sweep
+        elif model == "Random Forest":
+            sweep_df = rf_sweep
+        else:
+            sweep_df = xgb_sweep
         
         # Threshold slider (bounded to reasonable range)
         min_thresh = sweep_df['Threshold'].min()

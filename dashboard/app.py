@@ -43,7 +43,7 @@ with st.sidebar:
     - Target the right customers
     - Maximize ROI
     
-    **Models**: Logistic Regression, Random Forest
+    **Models**: Logistic Regression, Random Forest, XGBoost
     
     **Data**: Pre-computed from `04_business_impact.ipynb`
     """)
