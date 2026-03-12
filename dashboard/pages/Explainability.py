@@ -9,6 +9,7 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import joblib
+import xgboost as xgb
 from pathlib import Path
 
 st.set_page_config(page_title="Explainability", page_icon="🔍", layout="wide")
@@ -75,7 +76,7 @@ try:
             ax.axvline(x=0, color='black', linestyle='-', linewidth=0.5)
             plt.tight_layout()
             st.pyplot(fig)
-            st.dataframe(coef_df[['Feature', 'Coefficient', 'Direction']], use_container_width=True, hide_index=True)
+            st.dataframe(coef_df[['Feature', 'Coefficient', 'Direction']], width="stretch", hide_index=True)
         elif model_imp == "Random Forest":
             imp_df = pd.DataFrame({
                 'Feature': feature_cols,
@@ -88,7 +89,7 @@ try:
             ax.set_title('Top 10 Features by RF Importance')
             plt.tight_layout()
             st.pyplot(fig)
-            st.dataframe(imp_df, use_container_width=True, hide_index=True)
+            st.dataframe(imp_df, width="stretch", hide_index=True)
         else:
             xgb_imp_df = pd.DataFrame({
                 'Feature': feature_cols,
@@ -101,7 +102,7 @@ try:
             ax.set_title('Top 10 Features by XGBoost Importance')
             plt.tight_layout()
             st.pyplot(fig)
-            st.dataframe(xgb_imp_df, use_container_width=True, hide_index=True)
+            st.dataframe(xgb_imp_df, width="stretch", hide_index=True)
     
     with col2:
         st.markdown(f"### SHAP Summary Plot")
@@ -118,7 +119,7 @@ try:
             
         shap_summary_path = root / 'models' / summary_file
         if shap_summary_path.exists():
-            st.image(str(shap_summary_path), use_container_width=True)
+            st.image(str(shap_summary_path), width="stretch")
             st.caption("SHAP Summary Plot shows feature impacts on individual predictions across the dataset.")
         else:
             st.info("SHAP summary plot not found. Please run the modeling notebook.")
@@ -126,7 +127,7 @@ try:
         st.markdown("### Single Customer Risk Profile")
         shap_force_path = root / 'models' / force_file
         if shap_force_path.exists():
-            st.image(str(shap_force_path), use_container_width=True)
+            st.image(str(shap_force_path), width="stretch")
             st.caption("SHAP Force Plot explaining features pushing higher/lower risk for a single customer.")
         else:
             st.info("SHAP force plot not available.")
