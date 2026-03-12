@@ -1,10 +1,10 @@
 Metric,Value
 Recommended Model,XGBoost
 Optimal Threshold (Single),0.20
-Expected Net ROI (Single),"$107,562.40"
-High-Value Threshold,0.25
-Low-Value Threshold,0.30
-Expected Net ROI (Segmented),"$124,390.84"
+Expected Net ROI (Single),"$102,899.55"
+High-Value Threshold,0.10
+Low-Value Threshold,0.20
+Expected Net ROI (Segmented),"$121,857.39"
 CLV (Average),"$1,554.28"
 Retention Cost,$50.00
 Retention Success Rate,25%
