@@ -143,7 +143,7 @@ try:
     
     st.dataframe(
         display_df[['Threshold', 'Customers_Contacted', 'TP', 'FP', 'FN', 'Precision', 'Recall', 'Net_ROI']],
-        use_container_width=True,
+        width="stretch",
         hide_index=True
     )
 

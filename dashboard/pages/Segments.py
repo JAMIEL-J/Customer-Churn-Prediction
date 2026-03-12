@@ -9,6 +9,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import joblib
+import xgboost as xgb
 from pathlib import Path
 
 st.set_page_config(page_title="Segments", page_icon="👥", layout="wide")
@@ -123,7 +124,7 @@ try:
         display_df['churn_probability'] = display_df['churn_probability'].apply(lambda x: f"{x:.1%}")
         display_df['MonthlyCharges'] = display_df['MonthlyCharges'].apply(lambda x: f"${x:.2f}")
         
-        st.dataframe(display_df, use_container_width=True, hide_index=True)
+        st.dataframe(display_df, width="stretch", hide_index=True)
         st.success(f"**{len(to_contact)} customers** flagged for retention outreach at threshold {threshold:.2f}")
     else:
         st.warning("No customers flagged at this threshold.")

@@ -77,7 +77,7 @@ try:
     
     # Summary
     st.subheader("📋 Recommendation Summary")
-    st.dataframe(recommendations, use_container_width=True, hide_index=True)
+    st.dataframe(recommendations, width="stretch", hide_index=True)
     
     # Best Model highlight
     model_row = recommendations[recommendations['Metric'] == 'Recommended Model']
