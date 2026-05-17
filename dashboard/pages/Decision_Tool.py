@@ -8,17 +8,35 @@ This is where business decisions are made.
 import streamlit as st
 import pandas as pd
 from pathlib import Path
+import os
 
 st.set_page_config(page_title="Decision Tool", page_icon="🎯", layout="wide")
 
 st.title("🎯 Decision Tool")
 st.markdown("*Optimize your retention strategy*")
 
-# Get project root (works on both local and Streamlit Cloud)
+# Get project root - works on both local and Streamlit Cloud
 def get_project_root():
     """Get the project root directory."""
-    current_file = Path(__file__).resolve()
-    return current_file.parent.parent.parent
+    try:
+        # Try from script location
+        current_file = Path(__file__).resolve()
+        root = current_file.parent.parent.parent
+        if (root / 'reports').exists():
+            return root
+    except:
+        pass
+    
+    # Try from current working directory
+    cwd = Path(os.getcwd())
+    if (cwd / 'reports').exists():
+        return cwd
+    
+    # Try parent directory
+    if (cwd.parent / 'reports').exists():
+        return cwd.parent
+    
+    return cwd
 
 # Load pre-computed threshold sweep data
 @st.cache_data
@@ -143,7 +161,7 @@ try:
     
     st.dataframe(
         display_df[['Threshold', 'Customers_Contacted', 'TP', 'FP', 'FN', 'Precision', 'Recall', 'Net_ROI']],
-        width="stretch",
+        use_container_width=True,
         hide_index=True
     )
 

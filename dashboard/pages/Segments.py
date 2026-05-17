@@ -11,17 +11,35 @@ import numpy as np
 import joblib
 import xgboost as xgb
 from pathlib import Path
+import os
 
 st.set_page_config(page_title="Segments", page_icon="👥", layout="wide")
 
 st.title("👥 Customer Segments")
 st.markdown("*Who exactly are we targeting, and why?*")
 
-# Get project root (works on both local and Streamlit Cloud)
+# Get project root - works on both local and Streamlit Cloud
 def get_project_root():
     """Get the project root directory."""
-    current_file = Path(__file__).resolve()
-    return current_file.parent.parent.parent
+    try:
+        # Try from script location
+        current_file = Path(__file__).resolve()
+        root = current_file.parent.parent.parent
+        if (root / 'reports').exists():
+            return root
+    except:
+        pass
+    
+    # Try from current working directory
+    cwd = Path(os.getcwd())
+    if (cwd / 'reports').exists():
+        return cwd
+    
+    # Try parent directory
+    if (cwd.parent / 'reports').exists():
+        return cwd.parent
+    
+    return cwd
 
 @st.cache_data
 def load_data():
@@ -124,7 +142,7 @@ try:
         display_df['churn_probability'] = display_df['churn_probability'].apply(lambda x: f"{x:.1%}")
         display_df['MonthlyCharges'] = display_df['MonthlyCharges'].apply(lambda x: f"${x:.2f}")
         
-        st.dataframe(display_df, width="stretch", hide_index=True)
+        st.dataframe(display_df, use_container_width=True, hide_index=True)
         st.success(f"**{len(to_contact)} customers** flagged for retention outreach at threshold {threshold:.2f}")
     else:
         st.warning("No customers flagged at this threshold.")

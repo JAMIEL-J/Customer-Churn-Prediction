@@ -8,19 +8,35 @@ Answers: "Is this worth caring about?"
 import streamlit as st
 import pandas as pd
 from pathlib import Path
+import os
 
 st.set_page_config(page_title="Overview", page_icon="📊", layout="wide")
 
 st.title("📊 Executive Overview")
 st.markdown("*Is this worth caring about?*")
 
-# Get project root (works on both local and Streamlit Cloud)
+# Get project root - works on both local and Streamlit Cloud
 def get_project_root():
     """Get the project root directory."""
-    # Current file is in dashboard/pages/
-    current_file = Path(__file__).resolve()
-    # Go up: pages -> dashboard -> project_root
-    return current_file.parent.parent.parent
+    try:
+        # Try from script location
+        current_file = Path(__file__).resolve()
+        root = current_file.parent.parent.parent
+        if (root / 'reports').exists():
+            return root
+    except:
+        pass
+    
+    # Try from current working directory
+    cwd = Path(os.getcwd())
+    if (cwd / 'reports').exists():
+        return cwd
+    
+    # Try parent directory
+    if (cwd.parent / 'reports').exists():
+        return cwd.parent
+    
+    return cwd
 
 # Load pre-computed data
 @st.cache_data
@@ -77,7 +93,7 @@ try:
     
     # Summary
     st.subheader("📋 Recommendation Summary")
-    st.dataframe(recommendations, width="stretch", hide_index=True)
+    st.dataframe(recommendations, use_container_width=True, hide_index=True)
     
     # Best Model highlight
     model_row = recommendations[recommendations['Metric'] == 'Recommended Model']
